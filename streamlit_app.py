@@ -129,9 +129,9 @@ def main():
         
         st.subheader("Prediction Result")
         if prediction is not None:
-            st.write(prediction)
+            st.markdown(f"{prediction}")
         else:
-            st.write(prediction)
+            st.markdown(f"{prediction}")
         
 if __name__ == "__main__":
     main()
