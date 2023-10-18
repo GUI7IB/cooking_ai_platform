@@ -126,7 +126,7 @@ def main():
         image, prediction = process_image(uploaded_image, model_path)
 
         # Process the image and make predictions
-        image, prediction = process_image(uploaded_image, model)
+        image, prediction = process_image(uploaded_image, model_path)
         
         st.subheader("Prediction Result")
         if prediction is not None:
