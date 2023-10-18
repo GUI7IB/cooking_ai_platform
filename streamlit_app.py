@@ -13,7 +13,7 @@ model_paths = {
 }
 
 # Function to process the uploaded image
-def process_image(uploaded_image, model):
+def process_image(uploaded_image, model_path):
     # Read the uploaded image
     image = Image.open(uploaded_image)
     image_array = np.array(image)
@@ -45,7 +45,6 @@ def run_model(model_object_path, X):
     with open(model_object_path, 'rb') as model_file:
         model = pickle.load(model_file)
     
-    #
     prediction = int(model.predict(X))
     
     return prediction
@@ -116,7 +115,7 @@ def main():
     # Sidebar for model selection
     model_option = st.sidebar.radio("Select a Model", ["Upper", "Lower"])
     model_path = model_paths[model_option]
-    
+
     # File uploader
     uploaded_image = st.file_uploader("Upload an Image", type=["jpg", "png", "jpeg"])
     
