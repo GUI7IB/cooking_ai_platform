@@ -7,9 +7,10 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
-# Load the machine learning models
-model_upper = joblib.load("FSC_U.pkl")
-model_lower = joblib.load("FSC_B.pkl")
+model_paths = {
+    "Upper": "FSC_U.pkl",
+    "Lower": "FSC_B.pkl"
+}
 
 # Function to process the uploaded image
 def process_image(uploaded_image, model):
@@ -23,7 +24,7 @@ def process_image(uploaded_image, model):
     # Ensure it's a 2D array
     if len(image_array.shape) > 2:
         image_array = image_array.reshape(-1, image_array.shape[-1])
-        
+
     image_df = pd.DataFrame(image_array)
 
     # Apply the palette
@@ -33,7 +34,7 @@ def process_image(uploaded_image, model):
     X = transform_row(img_processed, palette='NCS7')
 
     # Make the prediction
-    prediction = run_model(model, X)
+    prediction = run_model(model_path, X)
     
     return image, prediction
 
@@ -122,11 +123,8 @@ def main():
         st.subheader("Uploaded Image")
         st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
         
-        if model_option == "Upper":
-            model = model_upper
-        else:
-            model = model_lower
-        
+        image, prediction = process_image(uploaded_image, model_path)
+
         # Process the image and make predictions
         image, prediction = process_image(uploaded_image, model)
         
