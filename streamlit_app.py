@@ -1,5 +1,6 @@
 import streamlit as st
 import joblib
+import pickle
 import os
 import cv2
 import numpy as np
