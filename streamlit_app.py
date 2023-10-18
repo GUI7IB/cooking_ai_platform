@@ -35,7 +35,7 @@ def process_image(uploaded_image, model_path):
     # Transform the image for prediction
     X = transform_row(img_processed, palette='NCS7')
     st.write(f"Shape of X: {X.shape}")
-    
+
     # Make the prediction
     prediction = run_model(model_path, X)
     
@@ -69,8 +69,10 @@ def transform_row(img_df, palette='NCS7'):
     for unique_color in unique_colors:
         each_count = img_df[img_df == unique_color].count().sum()
         each_percent = each_count / total_cell
-        new_row.update({str(unique_color):round(each_percent,2)})
-    
+
+        if str(unique_color) in new_row:
+            new_row[str(unique_color)] = round(each_percent, 2)
+            
     # convert color distribution dictionary to one row dataframe
     X = pd.DataFrame([new_row])
     
