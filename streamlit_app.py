@@ -115,6 +115,7 @@ def main():
     
     # Sidebar for model selection
     model_option = st.sidebar.radio("Select a Model", ["Upper", "Lower"])
+    model_path = model_paths[model_option]
     
     # File uploader
     uploaded_image = st.file_uploader("Upload an Image", type=["jpg", "png", "jpeg"])
@@ -123,9 +124,6 @@ def main():
         st.subheader("Uploaded Image")
         st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
         
-        image, prediction = process_image(uploaded_image, model_path)
-
-        # Process the image and make predictions
         image, prediction = process_image(uploaded_image, model_path)
         
         st.subheader("Prediction Result")
