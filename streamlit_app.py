@@ -16,6 +16,14 @@ def process_image(uploaded_image, model):
     # Read the uploaded image
     image = Image.open(uploaded_image)
     image_array = np.array(image)
+
+    if image_array.shape[-1] == 3:
+        image_array = cv2.cvtColor(image_array, cv2.COLOR_RGB2GRAY)
+
+    # Ensure it's a 2D array
+    if len(image_array.shape) > 2:
+        image_array = image_array.reshape(-1, image_array.shape[-1])
+        
     image_df = pd.DataFrame(image_array)
 
     # Apply the palette
