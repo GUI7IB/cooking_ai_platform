@@ -15,14 +15,10 @@ def process_image(uploaded_image, model):
     # Read the uploaded image
     image = Image.open(uploaded_image)
     image_array = np.array(image)
+    image_df = pd.DataFrame(image_array)
 
-    if image_array.shape[-1] == 3:
-        image_array = cv2.cvtColor(image_array, cv2.COLOR_RGB2GRAY)
-
-    image_array = image_array.reshape(-1)
-    
     # Apply the palette
-    img_processed = apply_palette(image_array, palette='NCS7')
+    img_processed = apply_palette(image_df, palette='NCS7')
 
     # Transform the image for prediction
     X = transform_row(img_processed, palette='NCS7')
@@ -31,6 +27,18 @@ def process_image(uploaded_image, model):
     prediction = run_model(model, X)
     
     return image, prediction
+
+def run_model(model_object_path, X):
+    '''
+    '''
+    # load the model
+    with open(model_object_path, 'rb') as model_file:
+        model = pickle.load(model_file)
+    
+    #
+    prediction = int(model.predict(X))
+    
+    return prediction
 
 def transform_row(img_df, palette='NCS7'):
     '''
@@ -114,10 +122,10 @@ def main():
         image, prediction = process_image(uploaded_image, model)
         
         st.subheader("Prediction Result")
-        if prediction == 1:
-            st.write("The model predicts 'Upper'.")
+        if prediction is not None:
+            st.write(prediction)
         else:
-            st.write("The model predicts 'Lower'.")
+            st.write(prediction)
         
 if __name__ == "__main__":
     main()
