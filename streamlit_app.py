@@ -22,7 +22,7 @@ def process_image(uploaded_image, model):
     image_array = image_array.reshape(-1)
     
     # Apply the palette
-    img_processed = apply_palette(image_df, palette='NCS7')
+    img_processed = apply_palette(image_array, palette='NCS7')
 
     # Transform the image for prediction
     X = transform_row(img_processed, palette='NCS7')
