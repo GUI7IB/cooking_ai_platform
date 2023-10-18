@@ -26,13 +26,16 @@ def process_image(uploaded_image, model_path):
         image_array = image_array.reshape(-1, image_array.shape[-1])
 
     image_df = pd.DataFrame(image_array)
+    st.write(f"Shape of X: {image_df.shape}")
 
     # Apply the palette
     img_processed = apply_palette(image_df, palette='NCS7')
+    st.write(f"Shape of X: {img_processed.shape}")
 
     # Transform the image for prediction
     X = transform_row(img_processed, palette='NCS7')
-
+    st.write(f"Shape of X: {X.shape}")
+    
     # Make the prediction
     prediction = run_model(model_path, X)
     
