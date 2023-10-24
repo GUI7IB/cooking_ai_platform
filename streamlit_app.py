@@ -7,8 +7,22 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
-st.set_page_config(page_title = "Automatic Cooking Evaluation Tool", page_icon=None, layout="centered",
-initial_sidebar_state="collapsed", menu_items=None)
+st.set_page_config(page_title = "Automatic Cooking Evaluation Tool", page_icon = None, layout = "centered",
+initial_sidebar_state = "collapsed", menu_items = None)
+
+st.markdown(
+    """
+    <style>
+    .sidebar-toggle {
+        font-size: 24px;
+    }
+    .stRadio div label {
+        font-size: 16px;
+    }
+    </style>
+    """,
+    unsafe_allow_html = True,
+)
 
 model_paths = {
     "Upper": "FSC_U.pkl",
