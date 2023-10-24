@@ -9,7 +9,10 @@ from PIL import Image
 
 model_paths = {
     "Upper": "FSC_U.pkl",
-    "Lower": "FSC_B.pkl"
+    "Lower": "FSC_B.pkl",
+    "Pizza": "PIZZA_U.pkl",
+    "Apple Pie": None,
+    "Grilling White Bread": "GWB_U.pkl"
 }
 
 # Function to process the uploaded image
@@ -36,7 +39,7 @@ def process_image(uploaded_image, model_path):
     # Make the prediction
     prediction = run_model(model_path, X)
     
-    return image, prediction
+    return prediction
 
 def run_model(model_object_path, X):
     '''
@@ -112,10 +115,10 @@ def apply_palette(df, palette='NCS7'):
 
 # Define the Streamlit app
 def main():
-    st.title("Image Classifier App")
+    st.title("Automatic Cooking Evaluation")
     
     # Sidebar for model selection
-    model_option = st.sidebar.radio("Select a Model", ["Upper", "Lower"])
+    model_option = st.sidebar.radio("Select a Product", ["Upper", "Lower", "Pizza", "Apple Pie", "Grilling White Bread"])
     model_path = model_paths[model_option]
 
     # File uploader
@@ -125,13 +128,13 @@ def main():
         st.subheader("Uploaded Image")
         st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
         
-        image, prediction = process_image(uploaded_image, model_path)
+        prediction = process_image(uploaded_image, model_path)
         
-        st.subheader("Prediction Result")
+        st.subheader("Evaluation Result")
         if prediction is not None:
             st.markdown(f"{prediction}")
         else:
-            st.markdown(f"{prediction}")
+            st.markdown(f"Something went wrong. Try again.")
         
 if __name__ == "__main__":
     main()
