@@ -146,14 +146,10 @@ def main():
         st.image(uploaded_image, use_column_width=True)
         st.divider()
 
-        spinner = st.spinner("Processing the image...")
-
         prediction = process_image(uploaded_image, model_path)
         
-        spinner.text("")
-
         st.subheader("Evaluation Result")
-        
+
         if prediction is not None:
             st.success(f"{prediction}")
         else:
