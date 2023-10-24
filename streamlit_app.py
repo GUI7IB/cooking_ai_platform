@@ -7,6 +7,9 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
+st.set_page_config(page_title = "Automatic Cooking Evaluation Tool", page_icon=None, layout="centered",
+initial_sidebar_state="collapsed", menu_items=None)
+
 model_paths = {
     "Upper": "FSC_U.pkl",
     "Lower": "FSC_B.pkl",
@@ -123,11 +126,10 @@ def main():
 
     # File uploader
     uploaded_image = st.file_uploader("Upload an Image", type=["jpg", "png", "jpeg"])
-    st.divider()
 
     if uploaded_image is not None:
         st.subheader("Uploaded Image")
-        st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
+        st.image(uploaded_image, use_column_width=True)
         st.divider()
 
         prediction = process_image(uploaded_image, model_path)
