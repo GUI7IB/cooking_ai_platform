@@ -123,18 +123,20 @@ def main():
 
     # File uploader
     uploaded_image = st.file_uploader("Upload an Image", type=["jpg", "png", "jpeg"])
-    
+    st.divider()
+
     if uploaded_image is not None:
         st.subheader("Uploaded Image")
         st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
-        
+        st.divider()
+
         prediction = process_image(uploaded_image, model_path)
         
         st.subheader("Evaluation Result")
         if prediction is not None:
-            st.markdown(f"{prediction}")
+            st.success(f"{prediction}")
         else:
-            st.markdown(f"Something went wrong. Try again.")
+            st.error("Something went wrong. Try again.")
         
 if __name__ == "__main__":
     main()
