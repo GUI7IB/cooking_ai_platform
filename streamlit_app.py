@@ -7,9 +7,11 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
+# Main functionalities about the page to be set at first,optional
 st.set_page_config(page_title = "Automatic Cooking Evaluation Tool", page_icon = None, layout = "centered",
 initial_sidebar_state = "collapsed", menu_items = None)
 
+# Changing font sizes on the sidebar with CSS injection
 st.markdown(
     """
     <style>
@@ -24,6 +26,7 @@ st.markdown(
     unsafe_allow_html = True,
 )
 
+# All the models that is working behind the app. They should be in the same directory with the script in the repo.
 model_paths = {
     "Upper": "FSC_U.pkl",
     "Lower": "FSC_B.pkl",
@@ -141,15 +144,19 @@ def main():
     # File uploader
     uploaded_image = st.file_uploader("Upload an Image", type=["jpg", "png", "jpeg"])
 
-    if uploaded_image is not None:
+    # If the state of the uploaded_image changes to other than None, trigger the process
+    if uploaded_image is not None: 
+        # Display the uploaded image, create a header, draw a seperator line to the end
         st.subheader("Uploaded Image")
         st.image(uploaded_image, use_column_width=True)
         st.divider()
 
+        # Trigger the process to make all the operations on image and return the final prediction
         prediction = process_image(uploaded_image, model_path)
         
         st.subheader("Evaluation Result")
 
+        # If prediction is been made successfully, display the result as succes box. If not, throw an error box.
         if prediction is not None:
             st.success(f"{prediction}")
         else:
